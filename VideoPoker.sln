@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPoker", "VideoPoker\VideoPoker.csproj", "{D25BF879-7A9A-4F39-A06C-CA649A141E4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D25BF879-7A9A-4F39-A06C-CA649A141E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D25BF879-7A9A-4F39-A06C-CA649A141E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D25BF879-7A9A-4F39-A06C-CA649A141E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D25BF879-7A9A-4F39-A06C-CA649A141E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {545C2E8D-D026-4C00-A8AC-814B81078B5D}
+	EndGlobalSection
+EndGlobal
