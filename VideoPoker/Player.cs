@@ -12,14 +12,9 @@
             Hand = new List<Card>();
         }
 
-        public void SetHand(List<Card> cards)
+        public void UpdateBankroll(int amount)
         {
-            Hand = cards;
-        }
-
-        public List<Card> GetHand()
-        {
-            return Hand;
+            Bankroll += amount;
         }
     }
 }

@@ -81,6 +81,21 @@ namespace VideoPoker
             return updatedHand;
         }
 
+        static string NameHand(HandType handType)
+        {
+            if (handType == HandType.RoyalFlush) return "Royal Flush";
+            if (handType == HandType.StraightFlush) return "Straight Flush";
+            if (handType == HandType.FourOfAKind) return "Four of a Kind";
+            if (handType == HandType.FullHouse) return "Full House";
+            if (handType == HandType.Flush) return "Flush";
+            if (handType == HandType.Straight) return "Straight";
+            if (handType == HandType.ThreeOfAKind) return "Three of a Kind";
+            if (handType == HandType.TwoPair) return "Two Pair";
+            if (handType == HandType.JacksOrBetter) return "Jacks or Better";
+            if (handType == HandType.LowPairOrHighCard) return "No Payout";
+            return "Unknown";
+        }
+
         static void DisplayHand(List<Card> hand)
         {
             foreach (Card card in hand)
@@ -93,8 +108,10 @@ namespace VideoPoker
 
         static void Main(string[] args)
         {
+
             var player = NewPlayer();
             var machine = InsertCoins();
+            player.UpdateBankroll(machine.Coins);
             List<Card> hand = DealBeforeDraw();
             List<int> holdPositions = HoldCards();
             List<Card> updatedHand = UpdateHand(hand, holdPositions);
@@ -106,6 +123,11 @@ namespace VideoPoker
             var rankCounts = new Dictionary<string, int>();
             var suitCounts = new Dictionary<string, int>();
             var handType = handEvaluator.EvaluateHand(updatedHand);
+
+            Console.WriteLine($"Your hand is {NameHand(handType)}");
+            int typeIndex = (int)handType;
+            int payout = machine.Payouts[typeIndex] * machine.Coins;
+            player.UpdateBankroll(payout);
         }
     }
 }

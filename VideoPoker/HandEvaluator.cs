@@ -2,30 +2,30 @@
 {
     public enum HandType
     {
-        Unknown,
-        RoyalFlush,
-        StraightFlush,
-        FourOfAKind,
-        FullHouse,
-        Flush,
-        Straight,
-        ThreeOfAKind,
-        TwoPair,
+        LowPairOrHighCard,
         JacksOrBetter,
-        HighCard
+        TwoPair,
+        ThreeOfAKind,
+        Straight,
+        Flush,
+        FullHouse,
+        FourOfAKind,
+        StraightFlush,
+        RoyalFlush
     }
+
     public class HandEvaluator
     {
-        private Dictionary<string, int> RankValues;
+        private Dictionary<string, int> rankValues;
 
         public Dictionary<string, int> GetRankValues()
         {
-            return RankValues;
+            return rankValues;
         }
 
         public HandEvaluator()
         {
-            RankValues = new Dictionary<string, int>()
+            rankValues = new Dictionary<string, int>()
             {
                 { "2", 2 },
                 { "3", 3 },
@@ -45,132 +45,132 @@
 
         public HandType EvaluateHand(List<Card> hand)
         {
-            Dictionary<string, int> RankCounts = CountRanks(hand);
-            Dictionary<string, int> SuitCounts = CountSuits(hand);
+            Dictionary<string, int> rankCounts = CountRanks(hand);
+            Dictionary<string, int> suitCounts = CountSuits(hand);
 
-            if (IsRoyalFlush(hand, SuitCounts))
+            if (IsRoyalFlush(hand, suitCounts))
             {
                 return HandType.RoyalFlush;
             }
 
-            if (IsStraightFlush(hand, RankCounts, SuitCounts))
+            if (IsStraightFlush(hand, rankCounts, suitCounts))
             {
                 return HandType.StraightFlush;
             }
 
-            if (IsFourOfAKind(RankCounts))
+            if (IsFourOfAKind(rankCounts))
             {
                 return HandType.FourOfAKind;
             }
 
-            if (IsFullHouse(RankCounts))
+            if (IsFullHouse(rankCounts))
             {
                 return HandType.FullHouse;
             }
 
-            if (IsFlush(SuitCounts))
+            if (IsFlush(suitCounts))
             {
                 return HandType.Flush;
             }
 
-            if (IsStraight(RankCounts))
+            if (IsStraight(rankCounts))
             {
                 return HandType.Straight;
             }
 
-            if (IsThreeOfAKind(RankCounts))
+            if (IsThreeOfAKind(rankCounts))
             {
                 return HandType.ThreeOfAKind;
             }
 
-            if (IsTwoPair(RankCounts))
+            if (IsTwoPair(rankCounts))
             {
                 return HandType.TwoPair;
             }
 
-            if (IsJacksOrBetter(RankCounts))
+            if (IsJacksOrBetter(rankCounts))
             {
                 return HandType.JacksOrBetter;
             }
 
-            return HandType.HighCard;
+            return HandType.LowPairOrHighCard;
         }
 
         public Dictionary<string, int> CountRanks(List<Card> hand)
         {
-            Dictionary<string, int> RankCounts = new Dictionary<string, int>();
+            Dictionary<string, int> rankCounts = new Dictionary<string, int>();
 
             foreach (Card card in hand)
             {
-                if (RankCounts.ContainsKey(card.Rank))
+                if (rankCounts.ContainsKey(card.Rank))
                 {
-                    RankCounts[card.Rank]++;
+                    rankCounts[card.Rank]++;
                 }
                 else
                 {
-                    RankCounts[card.Rank] = 1;
+                    rankCounts[card.Rank] = 1;
                 }
             }
 
-            return RankCounts;
+            return rankCounts;
         }
 
         public Dictionary<string, int> CountSuits(List<Card> hand)
         {
-            Dictionary<string, int> SuitCounts = new Dictionary<string, int>();
+            Dictionary<string, int> suitCounts = new Dictionary<string, int>();
 
             foreach (Card card in hand)
             {
-                if (SuitCounts.ContainsKey(card.Suit))
+                if (suitCounts.ContainsKey(card.Suit))
                 {
-                    SuitCounts[card.Suit]++;
+                    suitCounts[card.Suit]++;
                 }
                 else
                 {
-                    SuitCounts[card.Suit] = 1;
+                    suitCounts[card.Suit] = 1;
                 }
             }
 
-            return SuitCounts;
+            return suitCounts;
         }
 
-        private bool IsRoyalFlush(List<Card> hand, Dictionary<string, int> SuitCounts)
+        private bool IsRoyalFlush(List<Card> hand, Dictionary<string, int> suitCounts)
         {
-            return SuitCounts.ContainsValue(5) && hand.All(card => RankValues.ContainsKey(card.Rank) && RankValues[card.Rank] >= 10);
+            return suitCounts.ContainsValue(5) && hand.All(card => rankValues.ContainsKey(card.Rank) && rankValues[card.Rank] >= 10);
         }
 
-        private bool IsStraightFlush(List<Card> hand, Dictionary<string, int> RankCounts, Dictionary<string, int> SuitCounts)
+        private bool IsStraightFlush(List<Card> hand, Dictionary<string, int> rankCounts, Dictionary<string, int> suitCounts)
         {
-            return SuitCounts.ContainsValue(5) && IsStraight(RankCounts);
+            return suitCounts.ContainsValue(5) && IsStraight(rankCounts);
         }
 
-        private bool IsFourOfAKind(Dictionary<string, int> RankCounts)
+        private bool IsFourOfAKind(Dictionary<string, int> rankCounts)
         {
-            return RankCounts.ContainsValue(4);
+            return rankCounts.ContainsValue(4);
         }
 
-        private bool IsFullHouse(Dictionary<string, int> RankCounts)
+        private bool IsFullHouse(Dictionary<string, int> rankCounts)
         {
-            return RankCounts.ContainsValue(3) && RankCounts.ContainsValue(2);
+            return rankCounts.ContainsValue(3) && rankCounts.ContainsValue(2);
         }
 
-        private bool IsFlush(Dictionary<string, int> SuitCounts)
+        private bool IsFlush(Dictionary<string, int> suitCounts)
         {
-            return SuitCounts.ContainsValue(5);
+            return suitCounts.ContainsValue(5);
         }
 
-        private bool IsStraight(Dictionary<string, int> RankCounts)
+        private bool IsStraight(Dictionary<string, int> rankCounts)
         {
-            List<int> SortedRanks = RankCounts.Keys.Select(rank => RankValues[rank]).OrderBy(rankValue => rankValue).ToList();
+            List<int> sortedRanks = rankCounts.Keys.Select(rank => rankValues[rank]).OrderBy(rankValue => rankValue).ToList();
 
-            if (SortedRanks.Count != 5)
+            if (sortedRanks.Count != 5)
             {
                 return false;
             }
 
-            for (int i = 1; i < SortedRanks.Count; i++)
+            for (int i = 1; i < sortedRanks.Count; i++)
             {
-                if (SortedRanks[i] != SortedRanks[i - 1] + 1)
+                if (sortedRanks[i] != sortedRanks[i - 1] + 1)
                 {
                     return false;
                 }
@@ -179,23 +179,23 @@
             return true;
         }
 
-        private bool IsThreeOfAKind(Dictionary<string, int> RankCounts)
+        private bool IsThreeOfAKind(Dictionary<string, int> rankCounts)
         {
-            return RankCounts.ContainsValue(3);
+            return rankCounts.ContainsValue(3);
         }
 
-        private bool IsTwoPair(Dictionary<string, int> RankCounts)
+        private bool IsTwoPair(Dictionary<string, int> rankCounts)
         {
-            int PairCount = RankCounts.Values.Count(count => count == 2);
-            return PairCount == 2;
+            int pairCount = rankCounts.Values.Count(count => count == 2);
+            return pairCount == 2;
         }
 
-        private bool IsJacksOrBetter(Dictionary<string, int> RankCounts)
+        private bool IsJacksOrBetter(Dictionary<string, int> rankCounts)
         {
-            return RankCounts.ContainsKey("J") && RankCounts["J"] >= 2 ||
-                   RankCounts.ContainsKey("Q") && RankCounts["Q"] >= 2 ||
-                   RankCounts.ContainsKey("K") && RankCounts["K"] >= 2 ||
-                   RankCounts.ContainsKey("A") && RankCounts["A"] >= 2;
+            return rankCounts.ContainsKey("J") && rankCounts["J"] >= 2 ||
+                   rankCounts.ContainsKey("Q") && rankCounts["Q"] >= 2 ||
+                   rankCounts.ContainsKey("K") && rankCounts["K"] >= 2 ||
+                   rankCounts.ContainsKey("A") && rankCounts["A"] >= 2;
         }
     }
 }
