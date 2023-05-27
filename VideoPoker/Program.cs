@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace VideoPoker
+﻿namespace VideoPoker
 {
     class Program
     {
@@ -16,10 +13,13 @@ namespace VideoPoker
             return new Player(name, bankroll);
         }
 
-        static Machine InsertCoins()
+        static Machine InsertCoins(Player player)
         {
+            Console.WriteLine();
+            Console.WriteLine($"{player.Name}'s bankroll is {player.Bankroll}");
             Console.Write("How many coins to play? 1-5: ");
             int coins = int.Parse(Console.ReadLine());
+            if (coins == 0) Environment.Exit(0);
             return new Machine(coins);
         }
 
@@ -39,6 +39,7 @@ namespace VideoPoker
 
         static List<int> HoldCards()
         {
+            Console.WriteLine();
             Console.WriteLine("Which cards to hold? 1-5: ");
             string holdInput = Console.ReadLine();
             List<int> holdPositions = new List<int>();
@@ -108,26 +109,31 @@ namespace VideoPoker
 
         static void Main(string[] args)
         {
-
             var player = NewPlayer();
-            var machine = InsertCoins();
-            player.UpdateBankroll(machine.Coins);
-            List<Card> hand = DealBeforeDraw();
-            List<int> holdPositions = HoldCards();
-            List<Card> updatedHand = UpdateHand(hand, holdPositions);
 
-            DisplayHand(updatedHand);
+            while (true)
+            {
+                
+                var machine = InsertCoins(player);
+                player.UpdateBankroll(-machine.Coins);
 
-            var handEvaluator = new HandEvaluator();
-            var rankValues = handEvaluator.GetRankValues();
-            var rankCounts = new Dictionary<string, int>();
-            var suitCounts = new Dictionary<string, int>();
-            var handType = handEvaluator.EvaluateHand(updatedHand);
+                List<Card> hand = DealBeforeDraw();
+                List<int> holdPositions = HoldCards();
+                List<Card> updatedHand = UpdateHand(hand, holdPositions);
 
-            Console.WriteLine($"Your hand is {NameHand(handType)}");
-            int typeIndex = (int)handType;
-            int payout = machine.Payouts[typeIndex] * machine.Coins;
-            player.UpdateBankroll(payout);
+                DisplayHand(updatedHand);
+
+                var handEvaluator = new HandEvaluator();
+                var rankValues = handEvaluator.GetRankValues();
+                var rankCounts = new Dictionary<string, int>();
+                var suitCounts = new Dictionary<string, int>();
+                var handType = handEvaluator.EvaluateHand(updatedHand);
+
+                Console.WriteLine($"Your hand is {NameHand(handType)}");
+                int typeIndex = (int)handType;
+                int payout = machine.Payouts[typeIndex] * machine.Coins;
+                player.UpdateBankroll(payout);
+            }
         }
     }
 }

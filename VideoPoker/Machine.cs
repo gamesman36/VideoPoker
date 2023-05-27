@@ -1,6 +1,4 @@
-﻿using System.Dynamic;
-
-namespace VideoPoker
+﻿namespace VideoPoker
 {
     public class Machine
     {
