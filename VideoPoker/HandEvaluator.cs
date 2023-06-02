@@ -163,18 +163,17 @@
         {
             List<int> sortedRanks = rankCounts.Keys.Select(rank => rankValues[rank]).OrderBy(rankValue => rankValue).ToList();
 
-            if (sortedRanks.Count != 5)
-            {
-                return false;
-            }
+            // There can only be a straight with five sorted ranks
+            if (sortedRanks.Count != 5) return false;
 
+            // Compare cards with the previous one to check for a sequence
             for (int i = 1; i < sortedRanks.Count; i++)
             {
-                if (sortedRanks[i] != sortedRanks[i - 1] + 1)
-                {
-                    return false;
-                }
+                if (sortedRanks[i] != sortedRanks[i - 1] + 1) return false;
             }
+
+            // Special case for five-high straight where the ace is a low card
+            if (sortedRanks.SequenceEqual(new List<int> { 2, 3, 4, 5, 14 })) return true;
 
             return true;
         }
