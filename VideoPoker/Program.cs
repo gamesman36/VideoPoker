@@ -20,6 +20,7 @@
             Console.Write("How many coins to play? 1-5: ");
             int coins = int.Parse(Console.ReadLine());
             if (coins == 0) Environment.Exit(0);
+            Console.WriteLine();
             return new Machine(coins);
         }
 
