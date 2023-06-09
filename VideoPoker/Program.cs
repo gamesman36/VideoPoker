@@ -1,4 +1,6 @@
-﻿namespace VideoPoker
+﻿using System.Text;
+
+namespace VideoPoker
 {
     class Program
     {
@@ -110,11 +112,12 @@
 
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
             var player = NewPlayer();
 
             while (true)
             {
-                
                 var machine = InsertCoins(player);
                 player.UpdateBankroll(-machine.Coins);
 

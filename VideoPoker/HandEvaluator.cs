@@ -45,8 +45,8 @@
 
         public HandType EvaluateHand(List<Card> hand)
         {
-            Dictionary<string, int> rankCounts = CountRanks(hand);
-            Dictionary<string, int> suitCounts = CountSuits(hand);
+            var rankCounts = CountRanks(hand);
+            var suitCounts = CountSuits(hand);
 
             if (IsRoyalFlush(hand, suitCounts))
             {
@@ -98,7 +98,7 @@
 
         public Dictionary<string, int> CountRanks(List<Card> hand)
         {
-            Dictionary<string, int> rankCounts = new Dictionary<string, int>();
+            var rankCounts = new Dictionary<string, int>();
 
             foreach (Card card in hand)
             {
@@ -117,7 +117,7 @@
 
         public Dictionary<string, int> CountSuits(List<Card> hand)
         {
-            Dictionary<string, int> suitCounts = new Dictionary<string, int>();
+            var suitCounts = new Dictionary<string, int>();
 
             foreach (Card card in hand)
             {
