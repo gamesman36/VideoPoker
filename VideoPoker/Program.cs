@@ -22,7 +22,7 @@ namespace VideoPoker
             Console.Write("How many coins to play? 1-5: ");
             int coins = int.Parse(Console.ReadLine());
             if (coins == 0) Environment.Exit(0);
-            Console.WriteLine();
+            Console.Clear();
             return new Machine(coins);
         }
 
@@ -45,6 +45,7 @@ namespace VideoPoker
             Console.WriteLine();
             Console.WriteLine("Which cards to hold? 1-5: ");
             string holdInput = Console.ReadLine();
+            Console.Clear();
             List<int> holdPositions = new List<int>();
 
             foreach (char c in holdInput)
